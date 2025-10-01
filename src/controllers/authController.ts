@@ -43,7 +43,7 @@ export const login = async(req: Request, res: Response) => {
         res.cookie("accessToken", accessToken, { httpOnly: true, secure: process.env.NODE_ENV === 'produccion' })
         res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: process.env.NODE_ENV === 'produccion' });
 
-        res.json({message:"Login Existoso !"});
+        res.status(200).json({message:"Login Existoso !"});
     } catch (error) {
         res.status(500).json({message:"Error del servidor"});
     }
@@ -52,7 +52,7 @@ export const login = async(req: Request, res: Response) => {
 export const logout = async(req: Request, res: Response) => {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
-    res.json({message:"Logout Exitoso"});
+    res.status(200).json({message:"Logout Exitoso"});
 }
 
 export const refresh = async(req: Request, res: Response) => {

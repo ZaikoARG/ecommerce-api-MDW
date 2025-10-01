@@ -2,7 +2,7 @@ import moongose, {Schema} from "mongoose";
 
 
 const cartItemSchema = new Schema({
-    productId: {type: Schema.Types.ObjectId, ref: 'Product', required: true}, // Referencia a producto
+    product: {type: Schema.Types.ObjectId, ref: 'Product', required: true}, // Referencia a producto
     quantity: {type: Number, required: true, min: 1},
 })
 
