@@ -20,7 +20,7 @@ Este es un backend completo para un e-commerce simple desarrollado en **Node.js*
 
 ## Resumen y Documentación de la API
 
-URL Base: `http://localhost:3000/api` (o tu URL de Render en producción).
+URL Base: `http://localhost:3000/api`.
 
 | Categoría | Endpoints Principales | Requiere Auth? |
 |-----------|-----------------------|---------------|
