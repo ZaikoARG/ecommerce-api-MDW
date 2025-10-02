@@ -87,7 +87,11 @@ export const removeFromCart = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Carrito no encontrado.' });
         }
 
-        cart.items = cart.items.filter(item => item.product.toString() !== productId); // Filtra y elimina el item
+        for (let i = cart.items.length - 1; i >= 0; i--) {
+            if (cart.items[i].product.toString() === productId) {
+                cart.items.splice(i, 1); // Elimina el item del carrito
+            }
+        }
         await cart.save(); // Guarda
         await cart.populate("items.product"); // Pobla
         res.json(cart);
