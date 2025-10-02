@@ -10,7 +10,7 @@ const swaggerOptions: Options = {
         },
         servers: [
             {
-                url: process.env.NODE_ENV === 'produccion' ? 'https://render-url/api' : 'http://localhost:3000/api',
+                url: process.env.NODE_ENV === 'produccion' ? 'https://ecommerce-api-mdw.onrender.com/api' : 'http://localhost:3000/api',
             },
         ],
         components: {
