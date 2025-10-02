@@ -1,6 +1,14 @@
-import moongose, {Schema} from "mongoose";
+import moongose, {Schema, Document} from "mongoose";
 import bcrypt from "bcrypt";
 
+
+// Definimos una interfaz para el usuario
+export interface IUser extends Document {
+    name: string;
+    email: string;
+    password: string;
+    comparePassword(candidatePassword: string): Promise<boolean>;
+}
 
 // Definimos la estrucutra del usuario
 const userSchema = new Schema({
@@ -17,9 +25,9 @@ userSchema.pre("save", async function (next) {
 });
 
 // Metodo para comparar contraseñas, utilizado en el login
-userSchema.methods.comparePassword = async function (candidatePassword: string) {
-    return bcrypt.compare(candidatePassword, this.password);
+userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+    return await bcrypt.compare(candidatePassword, this.password);
 };
 
 // Exportamos el modelo para usarlo en otros archivos
-export default moongose.model("User", userSchema);
+export default moongose.model<IUser>("User", userSchema);

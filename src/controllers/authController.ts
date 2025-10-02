@@ -35,8 +35,10 @@ export const login = async(req: Request, res: Response) => {
         }
 
         // Genera el JWT
+        // @ts-ignore
         const accessToken = jwt.sign({id: user._id}, process.env.JWT_ACCESS_SECRET as string, {expiresIn: '15m'})
         // Genera el Refresh Token
+        // @ts-ignore
         const refreshToken = jwt.sign({id: user._id}, process.env.JWT_REFRESH_SECRET as string, {expiresIn: '7d'})
 
         // Guarda tokens en cookies HTTP-Only
