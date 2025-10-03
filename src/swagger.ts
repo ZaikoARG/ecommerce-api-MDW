@@ -1,4 +1,5 @@
 import { Options } from 'swagger-jsdoc';
+import path from 'path';
 
 const swaggerOptions: Options = {
     definition: {
@@ -24,7 +25,7 @@ const swaggerOptions: Options = {
             },
         },
     },
-    apis: ['./routes/*.ts'],  // Escanea tus rutas para JSDoc comments
+    apis: [`${__dirname}/routes/*.ts`],  // Escanea tus rutas para JSDoc comments
 };
 
 export default swaggerOptions;

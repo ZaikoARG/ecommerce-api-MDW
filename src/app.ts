@@ -23,10 +23,11 @@ moongose.connect(connectionString)
     .catch(err => console.error("Error al conectar a MongoDB", err));
 
 // Configuracion de Swagger
-const specs = swaggerJsdoc(swaggerOptions);
+// const specs = swaggerJsdoc(swaggerOptions);
+const swaggerDocument = require('../swagger.json');
 
 // Rutas
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get("/", (req, res) => {
     res.send("¡Hola! El servidor funciona.");
 })

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js"
+    "build": "tsc && cp swagger.json dist/swagger.json",
+    "start": "node dist/src/server.js"
   },
   "keywords": [],
   "author": "",
