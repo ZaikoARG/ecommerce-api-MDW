@@ -22,13 +22,15 @@ Este es un backend completo para un e-commerce simple desarrollado en **Node.js*
 
 URL Base: `http://localhost:3000/api`.
 
+URL de Render: [https://ecommerce-api-mdw.onrender.com/](https://ecommerce-api-mdw.onrender.com/api/docs/)
+
 | Categoría | Endpoints Principales | Requiere Auth? |
 |-----------|-----------------------|---------------|
 | **Autenticación** | POST /auth/register, POST /auth/login, POST /auth/logout, POST /auth/refresh | No (excepto logout/refresh) |
 | **Productos (CRUD)** | GET /products, GET /products/:id, POST /products, PUT /products/:id, DELETE /products/:id | Sí para POST/PUT/DELETE |
 | **Carrito** | GET /cart, POST /cart/add, PUT /cart/update, DELETE /cart/remove/:productId | Sí |
 
-Para detalles completos (schemas, ejemplos, errores), consulta la documentación interactiva en /api/docs.
+Para detalles completos (schemas, ejemplos, errores), consulta la documentación interactiva en [/api/docs](https://ecommerce-api-mdw.onrender.com/api/docs/).
 
 ## Contacto
 
