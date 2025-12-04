@@ -80,7 +80,7 @@ router.post('/register', register);  // POST /api/auth/register
  * @swagger
  * /auth/login:
  *   post:
- *     summary: Inicia sesión y genera tokens JWT en cookies
+ *     summary: Inicia sesión, genera tokens JWT y los envía en cookies HTTP-only
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -101,7 +101,16 @@ router.post('/register', register);  // POST /api/auth/register
  *                 example: 123456
  *     responses:
  *       200:
- *         description: Login exitoso (tokens en cookies)
+ *         description: Login exitoso. Las cookies accessToken y refreshToken se envían automáticamente.
+ *         headers:
+ *           Set-Cookie:
+ *             description: >
+ *               Envía las cookies:
+ *                 - accessToken (HTTP-only, expira en 15m)
+ *                 - refreshToken (HTTP-only, expira en 7 días)
+ *               Ambas con SameSite=None y secure=true en producción.
+ *             schema:
+ *               type: string
  *         content:
  *           application/json:
  *             schema:
@@ -109,12 +118,20 @@ router.post('/register', register);  // POST /api/auth/register
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Login Existoso !
- *         headers:
- *           Set-Cookie:
- *             description: accessToken (expira en 15m) y refreshToken (expira en 7d), HTTP-only
- *             schema:
- *               type: string
+ *                   example: Login exitoso
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                   example:
+ *                     id: "65b1c97f2fcf0b1234abcd89"
+ *                     name: "Juan Pérez"
+ *                     email: "juan@example.com"
  *       400:
  *         description: Datos inválidos o credenciales incorrectas
  *         content:
@@ -124,7 +141,7 @@ router.post('/register', register);  // POST /api/auth/register
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Credenciales Invalidas.
+ *                   example: Credenciales inválidas.
  *       500:
  *         description: Error del servidor
  *         content:
@@ -215,51 +232,23 @@ router.post('/refresh', refresh);    // POST /api/auth/refresh
  * @swagger
  * /auth/me:
  *   get:
- *     summary: Obtiene la información del usuario autenticado
+ *     summary: Obtiene el usuario autenticado usando las cookies HTTP-only
  *     tags: [Auth]
  *     security:
  *       - cookieAuth: []
  *     responses:
  *       200:
- *         description: Usuario autenticado obtenido correctamente
+ *         description: Usuario autenticado retornado correctamente
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 user:
- *                   type: object
- *                   properties:
- *                     id:
- *                       type: string
- *                       example: 6798c1df82f38439c903c132
- *                     email:
- *                       type: string
- *                       example: juan@example.com
- *                     name:
- *                       type: string
- *                       example: Juan Pérez
+ *                   $ref: '#/components/schemas/User'
  *       401:
- *         description: No autenticado (cookie faltante o inválida)
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: No estás autenticado
- *       500:
- *         description: Error en el servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Error obteniendo usuario
+ *         description: No autenticado o token inválido
  */
-router.get('/me', authMiddleware, getMe);   // GET /api/auth/me
+router.get("/me", authMiddleware, getMe);
 
 export default router;
