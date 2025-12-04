@@ -17,7 +17,10 @@ const app = express();
 const cors = require("cors");
 
 app.use(cors({
-  origin: ["https://ecommerce-frontend-mdw-1ofa.vercel.app/", "http://localhost:5173/"],
+  origin: [
+    "https://ecommerce-frontend-mdw-1ofa.vercel.app",
+    "http://localhost:5173"
+  ],
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
