@@ -74,3 +74,12 @@ export const refresh = async(req: Request, res: Response) => {
         res.status(403).json({message:"Refresh token invalido"});
     }
 }
+
+export const getMe = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ message: "No autenticado" });
+    }
+    res.json({
+        user: req.user
+    });
+};

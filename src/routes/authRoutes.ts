@@ -1,5 +1,6 @@
 import {Router} from "express";
-import {register, login, logout, refresh} from "../controllers/authController";
+import {register, login, logout, refresh, getMe} from "../controllers/authController";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = Router(); // Crea un mini-router para auth
 
@@ -209,5 +210,56 @@ router.post('/logout', logout);      // POST /api/auth/logout
  *         description: Error del servidor (implícito)
  */
 router.post('/refresh', refresh);    // POST /api/auth/refresh
+
+/**
+ * @swagger
+ * /auth/me:
+ *   get:
+ *     summary: Obtiene la información del usuario autenticado
+ *     tags: [Auth]
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Usuario autenticado obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: 6798c1df82f38439c903c132
+ *                     email:
+ *                       type: string
+ *                       example: juan@example.com
+ *                     name:
+ *                       type: string
+ *                       example: Juan Pérez
+ *       401:
+ *         description: No autenticado (cookie faltante o inválida)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: No estás autenticado
+ *       500:
+ *         description: Error en el servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Error obteniendo usuario
+ */
+router.get('/me', authMiddleware, getMe);   // GET /api/auth/me
 
 export default router;
